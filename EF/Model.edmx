@@ -1,0 +1,735 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GameShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FamilyView">
+          <Key>
+            <PropertyRef Name="IDParent" />
+            <PropertyRef Name="IPKid" />
+          </Key>
+          <Property Name="IDParent" Type="int" Nullable="false" />
+          <Property Name="IPKid" Type="int" Nullable="false" />
+          <Property Name="IsAccepted" Type="bit" Nullable="false" />
+          <Property Name="IsFullBan" Type="bit" Nullable="false" />
+          <Property Name="IsTemporaryBan" Type="bit" Nullable="false" />
+          <Property Name="BanEnd" Type="date" />
+          <Property Name="DailyLimitInMinutes" Type="int" Nullable="false" />
+          <Property Name="AccessFamilyLibrary" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="IDUser" />
+            <PropertyRef Name="IDFriend" />
+          </Key>
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="IDFriend" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Logo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="AgeLimit" Type="int" />
+        </EntityType>
+        <EntityType Name="GameCategory">
+          <Key>
+            <PropertyRef Name="IDGame" />
+            <PropertyRef Name="IDCategory" />
+          </Key>
+          <Property Name="IDGame" Type="int" Nullable="false" />
+          <Property Name="IDCategory" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameSession">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="TimeSpendInHours" Type="int" Nullable="false" />
+          <Property Name="IDGame" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionCoefficient" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IDRegion" Type="int" Nullable="false" />
+          <Property Name="Money" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="ProfileImg" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserCart">
+          <Key>
+            <PropertyRef Name="IDUser" />
+            <PropertyRef Name="IDGame" />
+          </Key>
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="IDGame" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserGame">
+          <Key>
+            <PropertyRef Name="IDUser" />
+            <PropertyRef Name="IDGame" />
+          </Key>
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="IDGame" Type="int" Nullable="false" />
+          <Property Name="BuyPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BuyDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserGameSession">
+          <Key>
+            <PropertyRef Name="IDUser" />
+            <PropertyRef Name="IDGameSession" />
+          </Key>
+          <Property Name="IDUser" Type="int" Nullable="false" />
+          <Property Name="IDGameSession" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FamilyView_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="FamilyView" Type="Self.FamilyView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FamilyView">
+              <PropertyRef Name="IDParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FamilyView_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="FamilyView" Type="Self.FamilyView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FamilyView">
+              <PropertyRef Name="IPKid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="IDFriend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="GameCategory" Type="Self.GameCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameCategory">
+              <PropertyRef Name="IDCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameCategory_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameCategory" Type="Self.GameCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameCategory">
+              <PropertyRef Name="IDGame" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameSession_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameSession" Type="Self.GameSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameSession">
+              <PropertyRef Name="IDGame" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IDRegion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCart_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="UserCart" Type="Self.UserCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserCart">
+              <PropertyRef Name="IDGame" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserCart_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserCart" Type="Self.UserCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserCart">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGame_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGame">
+              <PropertyRef Name="IDGame" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGame_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGame">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGameSession_GameSession">
+          <End Role="GameSession" Type="Self.GameSession" Multiplicity="1" />
+          <End Role="UserGameSession" Type="Self.UserGameSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameSession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGameSession">
+              <PropertyRef Name="IDGameSession" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGameSession_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserGameSession" Type="Self.UserGameSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGameSession">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GameShopModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FamilyView" EntityType="Self.FamilyView" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameCategory" EntityType="Self.GameCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameSession" EntityType="Self.GameSession" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserCart" EntityType="Self.UserCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGame" EntityType="Self.UserGame" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGameSession" EntityType="Self.UserGameSession" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FamilyView_User" Association="Self.FK_FamilyView_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="FamilyView" EntitySet="FamilyView" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FamilyView_User1" Association="Self.FK_FamilyView_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="FamilyView" EntitySet="FamilyView" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_User" Association="Self.FK_Friends_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_User1" Association="Self.FK_Friends_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameCategory_Category" Association="Self.FK_GameCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="GameCategory" EntitySet="GameCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameCategory_Game" Association="Self.FK_GameCategory_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GameCategory" EntitySet="GameCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameSession_Game" Association="Self.FK_GameSession_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GameSession" EntitySet="GameSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Region" Association="Self.FK_User_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCart_Game" Association="Self.FK_UserCart_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="UserCart" EntitySet="UserCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserCart_User" Association="Self.FK_UserCart_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserCart" EntitySet="UserCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGame_Game" Association="Self.FK_UserGame_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="UserGame" EntitySet="UserGame" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGame_User" Association="Self.FK_UserGame_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserGame" EntitySet="UserGame" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGameSession_GameSession" Association="Self.FK_UserGameSession_GameSession">
+            <End Role="GameSession" EntitySet="GameSession" />
+            <End Role="UserGameSession" EntitySet="UserGameSession" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGameSession_User" Association="Self.FK_UserGameSession_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserGameSession" EntitySet="UserGameSession" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GameShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.GameCategory" FromRole="Category" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AgeLimit" Type="Int32" />
+          <NavigationProperty Name="UserGame" Relationship="Self.FK_UserGame_Game" FromRole="Game" ToRole="UserGame" />
+          <NavigationProperty Name="Category" Relationship="Self.GameCategory" FromRole="Game" ToRole="Category" />
+          <NavigationProperty Name="User" Relationship="GameShopModel.UserCart" FromRole="Game" ToRole="User" />
+          <NavigationProperty Name="GameSession" Relationship="GameShopModel.FK_GameSession_Game" FromRole="Game" ToRole="GameSession" />
+        </EntityType>
+        <EntityType Name="GameSession">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeSpendInHours" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.UserGameSession" FromRole="GameSession" ToRole="User" />
+          <Property Name="IDGame" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="GameShopModel.FK_GameSession_Game" FromRole="GameSession" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionCoefficient" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Region" FromRole="Region" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDRegion" Type="Int32" Nullable="false" />
+          <Property Name="Money" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_User_Region" FromRole="User" ToRole="Region" />
+          <NavigationProperty Name="UserGame" Relationship="Self.FK_UserGame_User" FromRole="User" ToRole="UserGame" />
+          <NavigationProperty Name="Friends" Relationship="Self.Friends" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="User2" Relationship="Self.Friends" FromRole="User1" ToRole="User" />
+          <NavigationProperty Name="GameSession" Relationship="Self.UserGameSession" FromRole="User" ToRole="GameSession" />
+          <NavigationProperty Name="Cart" Relationship="GameShopModel.UserCart" FromRole="User" ToRole="Game" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="ProfileImg" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kids" Relationship="GameShopModel.FK_FamilyView_User" FromRole="User" ToRole="FamilyView" />
+          <NavigationProperty Name="Parents" Relationship="GameShopModel.FK_FamilyView_User1" FromRole="User" ToRole="FamilyView" />
+        </EntityType>
+        <EntityType Name="UserGame">
+          <Key>
+            <PropertyRef Name="IDUser" />
+            <PropertyRef Name="IDGame" />
+          </Key>
+          <Property Name="IDUser" Type="Int32" Nullable="false" />
+          <Property Name="IDGame" Type="Int32" Nullable="false" />
+          <Property Name="BuyPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="BuyDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Game" Relationship="Self.FK_UserGame_Game" FromRole="UserGame" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserGame_User" FromRole="UserGame" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserGame_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGame">
+              <PropertyRef Name="IDGame" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="IDRegion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGame_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserGame" Type="Self.UserGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGame">
+              <PropertyRef Name="IDUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Friends">
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="GameCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+        </Association>
+        <Association Name="UserGameSession">
+          <End Role="GameSession" Type="Self.GameSession" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Game" EntityType="Self.Game" />
+          <EntitySet Name="GameSession" EntityType="Self.GameSession" />
+          <EntitySet Name="Region" EntityType="Self.Region" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="UserGame" EntityType="Self.UserGame" />
+          <AssociationSet Name="FK_UserGame_Game" Association="Self.FK_UserGame_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="UserGame" EntitySet="UserGame" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Region" Association="Self.FK_User_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGame_User" Association="Self.FK_UserGame_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserGame" EntitySet="UserGame" />
+          </AssociationSet>
+          <AssociationSet Name="Friends" Association="Self.Friends">
+            <End Role="User" EntitySet="User" />
+            <End Role="User1" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="GameCategory" Association="Self.GameCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="UserGameSession" Association="Self.UserGameSession">
+            <End Role="GameSession" EntitySet="GameSession" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="UserCart" Association="GameShopModel.UserCart">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameSession_Game" Association="GameShopModel.FK_GameSession_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GameSession" EntitySet="GameSession" />
+          </AssociationSet>
+          <EntitySet Name="FamilyView" EntityType="GameShopModel.FamilyView" />
+          <AssociationSet Name="FK_FamilyView_User" Association="GameShopModel.FK_FamilyView_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="FamilyView" EntitySet="FamilyView" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FamilyView_User1" Association="GameShopModel.FK_FamilyView_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="FamilyView" EntitySet="FamilyView" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="UserCart">
+          <End Type="GameShopModel.Game" Role="Game" Multiplicity="*" />
+          <End Type="GameShopModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_GameSession_Game">
+          <End Type="GameShopModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="GameShopModel.GameSession" Role="GameSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameSession">
+              <PropertyRef Name="IDGame" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FamilyView">
+          <Key>
+            <PropertyRef Name="IDParent" />
+            <PropertyRef Name="IPKid" />
+          </Key>
+          <Property Name="IDParent" Type="Int32" Nullable="false" />
+          <Property Name="IPKid" Type="Int32" Nullable="false" />
+          <Property Name="IsAccepted" Type="Boolean" Nullable="false" />
+          <Property Name="IsFullBan" Type="Boolean" Nullable="false" />
+          <Property Name="IsTemporaryBan" Type="Boolean" Nullable="false" />
+          <Property Name="BanEnd" Type="DateTime" Precision="0" />
+          <Property Name="DailyLimitInMinutes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Parent" Relationship="GameShopModel.FK_FamilyView_User" FromRole="FamilyView" ToRole="User" />
+          <NavigationProperty Name="Kid" Relationship="GameShopModel.FK_FamilyView_User1" FromRole="FamilyView" ToRole="User" />
+          <Property Name="AccessFamilyLibrary" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FamilyView_User">
+          <End Type="GameShopModel.User" Role="User" Multiplicity="1" />
+          <End Type="GameShopModel.FamilyView" Role="FamilyView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FamilyView">
+              <PropertyRef Name="IDParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FamilyView_User1">
+          <End Type="GameShopModel.User" Role="User" Multiplicity="1" />
+          <End Type="GameShopModel.FamilyView" Role="FamilyView" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FamilyView">
+              <PropertyRef Name="IPKid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GameShopModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="GameShopModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Game">
+            <EntityTypeMapping TypeName="GameShopModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="AgeLimit" ColumnName="AgeLimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameSession">
+            <EntityTypeMapping TypeName="GameShopModel.GameSession">
+              <MappingFragment StoreEntitySet="GameSession">
+                <ScalarProperty Name="IDGame" ColumnName="IDGame" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="TimeSpendInHours" ColumnName="TimeSpendInHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="GameShopModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RegionCoefficient" ColumnName="RegionCoefficient" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="GameShopModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ProfileImg" ColumnName="ProfileImg" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IDRegion" ColumnName="IDRegion" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGame">
+            <EntityTypeMapping TypeName="GameShopModel.UserGame">
+              <MappingFragment StoreEntitySet="UserGame">
+                <ScalarProperty Name="IDUser" ColumnName="IDUser" />
+                <ScalarProperty Name="IDGame" ColumnName="IDGame" />
+                <ScalarProperty Name="BuyPrice" ColumnName="BuyPrice" />
+                <ScalarProperty Name="BuyDate" ColumnName="BuyDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Friends" TypeName="GameShopModel.Friends" StoreEntitySet="Friends">
+            <EndProperty Name="User">
+              <ScalarProperty Name="ID" ColumnName="IDUser" />
+            </EndProperty>
+            <EndProperty Name="User1">
+              <ScalarProperty Name="ID" ColumnName="IDFriend" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="GameCategory" TypeName="GameShopModel.GameCategory" StoreEntitySet="GameCategory">
+            <EndProperty Name="Category">
+              <ScalarProperty Name="ID" ColumnName="IDCategory" />
+            </EndProperty>
+            <EndProperty Name="Game">
+              <ScalarProperty Name="ID" ColumnName="IDGame" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserGameSession" TypeName="GameShopModel.UserGameSession" StoreEntitySet="UserGameSession">
+            <EndProperty Name="GameSession">
+              <ScalarProperty Name="ID" ColumnName="IDGameSession" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="ID" ColumnName="IDUser" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserCart" TypeName="GameShopModel.UserCart" StoreEntitySet="UserCart">
+            <EndProperty Name="User">
+              <ScalarProperty Name="ID" ColumnName="IDUser" />
+            </EndProperty>
+            <EndProperty Name="Game">
+              <ScalarProperty Name="ID" ColumnName="IDGame" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="FamilyView">
+            <EntityTypeMapping TypeName="GameShopModel.FamilyView">
+              <MappingFragment StoreEntitySet="FamilyView">
+                <ScalarProperty Name="AccessFamilyLibrary" ColumnName="AccessFamilyLibrary" />
+                <ScalarProperty Name="DailyLimitInMinutes" ColumnName="DailyLimitInMinutes" />
+                <ScalarProperty Name="BanEnd" ColumnName="BanEnd" />
+                <ScalarProperty Name="IsTemporaryBan" ColumnName="IsTemporaryBan" />
+                <ScalarProperty Name="IsFullBan" ColumnName="IsFullBan" />
+                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+                <ScalarProperty Name="IPKid" ColumnName="IPKid" />
+                <ScalarProperty Name="IDParent" ColumnName="IDParent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

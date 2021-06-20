@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bd4d5b3551164f7f8bb9300db83aea4f" Name="Diagram1">
+        <EntityTypeShape EntityType="GameShopModel.Category" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="GameShopModel.Game" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GameShopModel.GameSession" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GameShopModel.Region" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GameShopModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="GameShopModel.UserGame" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="GameShopModel.FK_UserGame_Game" ManuallyRouted="false" />
+        <AssociationConnector Association="GameShopModel.FK_User_Region" ManuallyRouted="false" />
+        <AssociationConnector Association="GameShopModel.FK_UserGame_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GameShopModel.Friends" ManuallyRouted="false" />
+        <AssociationConnector Association="GameShopModel.GameCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="GameShopModel.UserGameSession" ManuallyRouted="false" />
+        <AssociationConnector Association="GameShopModel.UserCart" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.0849609375" PointY="9.375" />
+          <ConnectorPoint PointX="4.0849609375" PointY="5.6725065104166656" />
+        </AssociationConnector>
+        <AssociationConnector Association="GameShopModel.FK_GameSession_Game" />
+        <EntityTypeShape EntityType="GameShopModel.FamilyView" Width="1.5" PointX="5.25" PointY="5" />
+        <AssociationConnector Association="GameShopModel.FK_FamilyView_User" />
+        <AssociationConnector Association="GameShopModel.FK_FamilyView_User1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

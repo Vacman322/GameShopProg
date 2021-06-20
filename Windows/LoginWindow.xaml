@@ -1,0 +1,34 @@
+﻿<Window x:Class="GameShopProg.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameShopProg"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="300" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Авторизация" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Логин" HorizontalAlignment="Left" Margin="5"/>
+            <TextBox Width="150" Margin="0 5" x:Name="LoginTextBox"/>
+            <TextBlock Text="Пароль" HorizontalAlignment="Left" Margin="5"/>
+            <PasswordBox Width="150" Margin="0 5" x:Name="PasPasswordBox"/>
+            <StackPanel Orientation="Horizontal">
+                <Image Width="100" Height="30" Margin="5 0" x:Name="CaptchaImg" Source="{Binding CaptchaImg}"/>
+                <Label  Width="30" Content="{StaticResource Refresh}" MouseLeftButtonDown="RefreshClick"/>
+            </StackPanel>
+            <TextBox Width="100" x:Name="CaptchaTextBox"/>
+            <CheckBox Content="Запомнить меня" Margin="5" x:Name="RememberMeCB"/>
+            <TextBlock Text="Регистрация" HorizontalAlignment="Center" TextDecorations="Underline" MouseLeftButtonDown="RegistrationClick"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Войти" Margin="10 0" HorizontalAlignment="Left" Click="LoginButtonClick"/>
+            <Button Content="Отменить" Margin="10 0" HorizontalAlignment="Right" Click="CancelButtonClick"/>
+        </StackPanel>
+    </Grid>
+</Window>

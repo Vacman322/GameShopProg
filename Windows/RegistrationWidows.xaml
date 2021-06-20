@@ -1,0 +1,38 @@
+﻿<Window x:Class="GameShopProg.RegistrationWidows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameShopProg"
+        mc:Ignorable="d"
+        Title="RegistrationWidows" Height="450" Width="800">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBlock Text="Регистрация" HorizontalAlignment="Center"/>
+            
+            <TextBlock Text="Email"/>
+            <TextBox Width="150" Name="EmailTextBox"/>
+
+            <TextBlock Text="Пароль"/>
+            <PasswordBox Width="150" Name="PasswordPasBox"/>
+
+            <TextBlock Text="Фамилия"/>
+            <TextBox Width="150" Name="LastNameTextBox"/>
+
+            <TextBlock Text="Имя"/>
+            <TextBox Width="150" Name="FirstNameTextBox"/>
+
+            <TextBlock Text="Отчество"/>
+            <TextBox Width="150" Name="PatronymicTextBox"/>
+
+            <TextBlock Text="Дата рождения"/>
+            <DatePicker Width="150" x:Name="BirthdayDatePicker"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Зарегистрировать" Click="RegistrationButtonClick"/>
+                <Button Content="Отмена" Click="CancelButtonClick"/>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

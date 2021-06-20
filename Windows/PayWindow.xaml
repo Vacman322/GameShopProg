@@ -1,0 +1,61 @@
+﻿<Window x:Class="GameShopProg.PayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameShopProg"
+        mc:Ignorable="d"
+        Title="PayWindow" Height="300" Width="200" 
+        MaxHeight="400"
+        MaxWidth="300"
+        MinHeight="300"
+        MinWidth="200">
+    <Grid
+          x:Name="ParentGrid"
+          Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock 
+            Text="Пополнение" 
+            FontSize="18" 
+            FontWeight="Bold" 
+            Margin="10"/>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Номер"/>
+            <TextBox x:Name="CardNumberTB"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <StackPanel>
+                <TextBlock Text="мм"/>
+                <TextBox x:Name="MonthTB"/>
+            </StackPanel>
+
+            <StackPanel Margin="10 0"> 
+                <TextBlock Text="гггг"/>
+                <TextBox x:Name="YearTB"/>
+            </StackPanel>
+
+            <StackPanel Margin="10 0">
+                <TextBlock Text="scv"/>
+                <TextBox x:Name="ScvTB" Width="50"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="Сумма"/>
+            <TextBox x:Name="SumTB"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <Button Content="Пополнить" Margin="10 0" VerticalAlignment="Center" Click="PayBtnClick"/>
+            <Button Content="Отмена" Margin="10 0" VerticalAlignment="Center" Click="CancelBtnClick"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,66 @@
+﻿<Window x:Class="GameShopProg.EditProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameShopProg"
+        mc:Ignorable="d"
+        Title="EditProfileWindow" Height="450" Width="400"
+        MaxHeight="500"
+        MaxWidth="500"
+        MinHeight="450"
+        MinWidth="300">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center">
+            <TextBlock Text="Редактировать профиль"
+                       FontWeight="Bold"
+                       FontSize="18"/>
+            <StackPanel Orientation="Horizontal">
+                <Image Width="100" Height="100" x:Name="AvatarImg">
+                    <Image.Source>
+                        <Binding Path="ProfileImgSrc" Mode="OneTime">
+                            <Binding.TargetNullValue>
+                                <ImageSource>/Resources/df.png</ImageSource>
+                            </Binding.TargetNullValue>
+                        </Binding>
+                    </Image.Source>
+                </Image>
+                <Button Content="Загрузить" 
+                        VerticalAlignment="Center" 
+                        Margin="10 0"
+                        Click="LoadImgClick"/>
+            </StackPanel>
+
+            <TextBlock Text="Email" Margin="10 0"/>
+            <TextBox x:Name="EmailTB" Margin="10 0"/>
+
+            <TextBlock Text="Пароль" Margin="10 0"/>
+            <PasswordBox x:Name="PasswordB" Margin="10 0"/>
+
+            <TextBlock Text="Фамилия" Margin="10 0"/>
+            <TextBox x:Name="LastNameTB" Margin="10 0"/>
+            
+            <TextBlock Text="Имя" Margin="10 0"/>
+            <TextBox x:Name="NameTB" Margin="10 0"/>
+
+            <TextBlock Text="Отчество" Margin="10 0"/>
+            <TextBox x:Name="PatronymicTB" Margin="10 0"/>
+            
+            <TextBlock Text="День рождения" Margin="10 0"/>
+            <DatePicker x:Name="BirthDay" Margin="10 0"/>
+
+            <TextBlock Text="Удалить аккаунт" 
+                       TextDecorations="Underline"
+                       MouseLeftButtonDown="DelAccountClick"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Сохранить"
+                        Margin="10 0"
+                        Click="SaveClick"/>
+                <Button Content="Отмена" 
+                        Margin="10 0"
+                        Click="CancelClick"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
